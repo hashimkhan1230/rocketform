@@ -1,0 +1,161 @@
+/* =========================
+   GLOBAL FIX (IMPORTANT)
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   PAGE WRAPPER (EDIT ONLY)
+========================= */
+.edit-wrapper {
+  min-height: 100vh;
+  background: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 64px 16px;
+}
+
+/* =========================
+   CARD
+========================= */
+.edit-card {
+  width: 100%;
+  max-width: 720px;              /* ⬅️ thoda kam, stable */
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 26px 30px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.08);
+  animation: editFade 0.35s ease;
+}
+
+/* =========================
+   TITLE
+========================= */
+.edit-card h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.edit-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   FORM
+========================= */
+.edit-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                     /* ⬅️ gap thoda kam */
+}
+
+/* =========================
+   INPUTS (STABLE)
+========================= */
+.edit-card input[type="text"],
+.edit-card input[type="number"],
+.edit-card textarea,
+.edit-card select {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #d1d5db;
+  font-size: 14px;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-card textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.edit-card input:focus,
+.edit-card textarea:focus,
+.edit-card select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* =========================
+   FILE INPUT (NO JUMP)
+========================= */
+.edit-card input[type="file"] {
+  font-size: 13px;
+  padding: 6px 2px;
+}
+
+/* =========================
+   IMAGE PREVIEW (NO SHIFT)
+========================= */
+.edit-card img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  margin-top: 4px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.edit-btn-primary {
+  width: 100%;                   /* ⬅️ full width = no move */
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+}
+
+.edit-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes editFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   MOBILE FIX
+========================= */
+@media (max-width: 640px) {
+  .edit-card {
+    padding: 22px 18px;
+  }
+
+  .edit-card h2 {
+    font-size: 22px;
+  }
+}

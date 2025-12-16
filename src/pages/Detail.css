@@ -1,0 +1,78 @@
+.detail-wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.detail-wrapper h1 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.detail-wrapper small {
+  color: #6b7280;
+}
+
+.detail-wrapper p {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #f1f5f9;
+}
+
+.actions .danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.comments {
+  margin-top: 30px;
+}
+
+.comments textarea {
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: 10px;
+}
+
+.comment {
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 80px;
+}

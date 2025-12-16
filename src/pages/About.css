@@ -1,0 +1,104 @@
+.about-wrapper {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  padding: 20px;
+}
+
+/* MAIN BOX */
+.about-box {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+
+  /* TAGDA LOOK */
+  border: 2px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+}
+
+/* HEADER */
+.about-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.about-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.about-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1.5px solid #000000;
+  color: #000000;
+}
+
+/* INTRO */
+.about-intro {
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+/* GRID */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* SMALL CARDS */
+.about-card {
+  border: 1.5px solid #000000;
+  border-radius: 12px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.about-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #000000;
+}
+
+.about-card p {
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* FOOTER */
+.about-footer {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1.5px solid #000000;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
