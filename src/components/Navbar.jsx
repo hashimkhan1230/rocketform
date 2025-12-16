@@ -19,7 +19,7 @@ export default function Navbar() {
   const handleLogout = async () => {
     await signOut(auth);
     setOpen(false);
-    navigate("/login");
+    navigate("/");
   };
 
   return (
