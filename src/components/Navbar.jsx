@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 🔐 Auth pages
+  const authRoutes = ["/signup", "/login", "/otp-verification"];
+  const isAuthPage = authRoutes.includes(location.pathname);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
@@ -26,7 +31,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
 
-        {/* ✅ LOGO → HOME */}
+        {/* LOGO */}
         <div
           className="navbar-logo"
           onClick={() => {
@@ -38,44 +43,40 @@ export default function Navbar() {
           Rocket<span>Form</span>
         </div>
 
-        {/* CENTER LINKS */}
+        {/* LINKS */}
         <nav className={`navbar-links ${open ? "open" : ""}`}>
-          <Link to="/" onClick={() => setOpen(false)}>Home</Link>
 
-          {user && (
+          {/* HOME only when NOT auth page */}
+          {!isAuthPage && (
+            <Link to="/" onClick={() => setOpen(false)}>Home</Link>
+          )}
+
+          {/* AUTH PAGES → ONLY ABOUT + CONTACT */}
+          {isAuthPage && (
+            <>
+              <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
+              <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
+            </>
+          )}
+
+          {/* NORMAL PAGES */}
+          {!isAuthPage && user && (
             <>
               <Link to="/add-post" onClick={() => setOpen(false)}>Add Post</Link>
               <Link to="/add-article" onClick={() => setOpen(false)}>Add Article</Link>
             </>
           )}
 
-          <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
-          <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
-
-          {/* 🔽 MOBILE ONLY */}
-          {user && (
-            <div className="mobile-only">
-              <div
-                className="mobile-profile"
-                onClick={() => {
-                  navigate("/profile");
-                  setOpen(false);
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="profile-icon">
-                  {user.displayName ? user.displayName[0].toUpperCase() : "U"}
-                </div>
-                <span>{user.displayName || "User"}</span>
-              </div>
-
-              <button className="logout-btn" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
+          {/* ABOUT & CONTACT always visible */}
+          {!isAuthPage && (
+            <>
+              <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
+              <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
+            </>
           )}
 
-          {!user && (
+          {/* MOBILE AUTH BUTTONS */}
+          {isAuthPage && (
             <div className="mobile-only">
               <Link to="/login" onClick={() => setOpen(false)}>Login</Link>
               <Link to="/signup" onClick={() => setOpen(false)}>Sign Up</Link>
@@ -83,13 +84,12 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* RIGHT SIDE (DESKTOP ONLY) */}
-        {user ? (
+        {/* RIGHT SIDE (DESKTOP) */}
+        {!isAuthPage && user ? (
           <div className="navbar-right desktop-only">
-            {/* ✅ PROFILE ICON → PROFILE PAGE */}
             <div
               className="profile-box"
-              onClick={() => navigate("/Profile")}
+              onClick={() => navigate("/profile")}
               style={{ cursor: "pointer" }}
             >
               <div className="profile-icon">
@@ -105,10 +105,12 @@ export default function Navbar() {
             </button>
           </div>
         ) : (
-          <div className="navbar-right desktop-only">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
+          !user && (
+            <div className="navbar-right desktop-only">
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          )
         )}
 
         {/* HAMBURGER */}
