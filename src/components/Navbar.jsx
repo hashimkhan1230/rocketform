@@ -10,7 +10,6 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔐 Auth pages
   const authRoutes = ["/signup", "/login", "/otp-verification"];
   const isAuthPage = authRoutes.includes(location.pathname);
 
@@ -46,20 +45,10 @@ export default function Navbar() {
         {/* LINKS */}
         <nav className={`navbar-links ${open ? "open" : ""}`}>
 
-          {/* HOME only when NOT auth page */}
           {!isAuthPage && (
             <Link to="/" onClick={() => setOpen(false)}>Home</Link>
           )}
 
-          {/* AUTH PAGES → ONLY ABOUT + CONTACT */}
-          {isAuthPage && (
-            <>
-              <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
-              <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
-            </>
-          )}
-
-          {/* NORMAL PAGES */}
           {!isAuthPage && user && (
             <>
               <Link to="/add-post" onClick={() => setOpen(false)}>Add Post</Link>
@@ -67,24 +56,45 @@ export default function Navbar() {
             </>
           )}
 
-          {/* ABOUT & CONTACT always visible */}
-          {!isAuthPage && (
-            <>
-              <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
-              <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
-            </>
-          )}
+          <Link to="/about" onClick={() => setOpen(false)}>About Us</Link>
+          <Link to="/contact" onClick={() => setOpen(false)}>Contact Us</Link>
 
-          {/* MOBILE AUTH BUTTONS */}
-          {isAuthPage && (
-            <div className="mobile-only">
-              <Link to="/login" onClick={() => setOpen(false)}>Login</Link>
-              <Link to="/signup" onClick={() => setOpen(false)}>Sign Up</Link>
-            </div>
-          )}
+          {/* 📱 MOBILE AUTH SECTION */}
+          <div className="mobile-only">
+
+            {user ? (
+              <>
+                {!isAuthPage && (
+                  <div
+                    className="mobile-profile"
+                    onClick={() => {
+                      navigate("/profile");
+                      setOpen(false);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="profile-icon">
+                      {user.displayName ? user.displayName[0].toUpperCase() : "U"}
+                    </div>
+                    <span>{user.displayName || "User"}</span>
+                  </div>
+                )}
+
+                <button className="logout-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={() => setOpen(false)}>Login</Link>
+                <Link to="/signup" onClick={() => setOpen(false)}>Sign Up</Link>
+              </>
+            )}
+
+          </div>
         </nav>
 
-        {/* RIGHT SIDE (DESKTOP) */}
+        {/* DESKTOP RIGHT */}
         {!isAuthPage && user ? (
           <div className="navbar-right desktop-only">
             <div
