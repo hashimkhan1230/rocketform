@@ -19,6 +19,7 @@ import Contact from "./pages/Contact";
 /* DETAIL PAGES (if you have them) */
 import PostDetail from "./pages/PostDetail";
 import ArticleDetail from "./pages/ArticleDetail";
+import EmailOTPVerification from "./pages/EmailOTPVerification";
 
 export default function App() {
   return (
@@ -52,7 +53,9 @@ export default function App() {
         {/* STATIC */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/otp-verification" element={<EmailOTPVerification />} />
       </Routes>
+
 
       {/* 🔻 GLOBAL FOOTER */}
       <Footer />
