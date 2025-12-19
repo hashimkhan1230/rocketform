@@ -9,7 +9,7 @@
   text-align: center;
   padding: 70px 20px 50px;
   position: relative;
-  z-index: 1; /* 🔥 hero overlay fix */
+  z-index: 1;
 }
 
 .hero-landing h1 {
@@ -28,28 +28,22 @@
   margin-bottom: 22px;
 }
 
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
+/* ===== SEARCH ===== */
+.search-box {
+  width: 100%;
+  max-width: 600px;
+  padding: 14px;
+  margin: 20px auto 0;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  background: #ffffff;
+  color: #111827;
+  font-size: 1rem;
 }
 
-.btn {
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.btn.primary {
-  background: #2563eb;
-  color: #fff;
-}
-
-.btn.secondary {
-  border: 1px solid #2563eb;
-  color: #2563eb;
+.search-box::placeholder {
+  color: #94a3b8;
 }
 
 /* ===== SECTIONS ===== */
@@ -58,7 +52,7 @@
   margin: 40px auto;
   padding: 0 20px;
   position: relative;
-  z-index: 2; /* 🔥 ensure cards are on top */
+  z-index: 2;
 }
 
 .latest h2 {
@@ -79,16 +73,16 @@
   gap: 20px;
 }
 
-/* ===== LINK FIX (MOST IMPORTANT) ===== */
+/* ===== LINK (FULL CARD CLICKABLE) ===== */
 .card-link {
   text-decoration: none;
   color: inherit;
-  display: block;        /* 🔥 full card clickable */
+  display: block;
   position: relative;
   z-index: 5;
 }
 
-/* ===== CARD ===== */
+/* ===== CARD (FIXED SIZE) ===== */
 .home-card {
   background: #ffffff;
   border-radius: 14px;
@@ -96,7 +90,11 @@
   border: 1px solid #e5e7eb;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;       /* 🔥 clickable cursor */
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  height: 250px; /* 🔥 SAME HEIGHT FOR ALL */
 }
 
 .home-card:hover {
@@ -104,19 +102,45 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* ===== IMAGE ===== */
+/* ===== IMAGE AREA (FIXED SPACE) ===== */
+.card-image-wrapper {
+  height: 180px;
+  width: 100%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* REAL IMAGE */
 .card-image {
   width: 100%;
-  height: 180px;
+  height: 100%;
   object-fit: cover;
+}
+
+/* NO IMAGE PLACEHOLDER */
+.no-image {
+  width: 100%;
+  height: 100%;
   background: #f1f5f9;
-  pointer-events: none;  /* 🔥 image click block fix */
+  border-bottom: 1px dashed #cbd5e1;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 /* ===== CONTENT ===== */
 .home-card-content {
   padding: 14px 16px;
-  pointer-events: none;  /* 🔥 content click block fix */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  pointer-events: none;
 }
 
 .home-card-content h3 {
@@ -126,6 +150,7 @@
   color: #111827;
 }
 
+/* LIMIT TEXT HEIGHT */
 .home-card-content p {
   font-size: 13px;
   color: #6b7280;
@@ -135,6 +160,8 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  flex-grow: 1;
 }
 
 .home-card-content small {

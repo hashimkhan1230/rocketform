@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import "./Auth.css";
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
@@ -21,26 +22,46 @@ export default function Login() {
     setLoading(true);
 
     try {
+      // 🔍 Find user by UserID
+      const q = query(
+        collection(db, "users"),
+        where("userId", "==", userId.toLowerCase())
+      );
+
+      const snap = await getDocs(q);
+
+      if (snap.empty) {
+        setError("User ID not found");
+        setLoading(false);
+        return;
+      }
+
+      const userData = snap.docs[0].data();
+      const email = userData.email;
+
+      // 🔐 Login with email + password
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      // ✅ Get name from Firebase profile
+      // ✅ Get name
       const name =
         userCredential.user.displayName ||
-        userCredential.user.email.split("@")[0];
+        userData.name ||
+        userId;
 
       setUserName(name);
       setSuccess(true);
 
-      // ⏳ Redirect after 2 sec
+      // ⏳ Redirect after 3 sec
       setTimeout(() => {
         navigate("/");
-      }, 4000);
+      }, 3000);
+
     } catch (err) {
-      setError("Invalid email or password");
+      setError("Invalid User ID or password");
     } finally {
       setLoading(false);
     }
@@ -52,19 +73,19 @@ export default function Login() {
         {success ? (
           <div className="success-box">
             <h2>👋 Welcome back, {userName}</h2>
-            <p>Your account has been logged in successfully.</p>
+            <p>You have logged in successfully.</p>
           </div>
         ) : (
           <>
             <h2>Login</h2>
-            <p>Access your RocketForm account</p>
+            <p>Login using your User ID</p>
 
             <form onSubmit={handleLogin}>
               <input
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="User ID"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
                 required
               />
 
