@@ -14,7 +14,7 @@ export default function AddPost() {
 
   // 🔥 Cloudinary image upload
   const uploadImage = async () => {
-    if (!image) return "";
+    if (!image) return null;
 
     const formData = new FormData();
     formData.append("file", image);
@@ -46,22 +46,32 @@ export default function AddPost() {
       return;
     }
 
+    // 🚨 IMAGE REQUIRED CHECK
+    if (!image) {
+      alert("Image is required to publish a post");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const imageUrl = await uploadImage();
 
+      if (!imageUrl) {
+        alert("Image upload failed");
+        setLoading(false);
+        return;
+      }
+
       await addDoc(collection(db, "posts"), {
         title: title.trim(),
         content: content.trim(),
-        imageUrl,
+        imageUrl, // ✅ always exists now
         author: auth.currentUser.displayName || "Anonymous",
-
-        ownerId: auth.currentUser.uid, // 🔒🔥 THIS IS THE KEY FIX
+        ownerId: auth.currentUser.uid,
 
         likes: 0,
         likedBy: [],
-
         createdAt: serverTimestamp(),
       });
 
@@ -103,10 +113,11 @@ export default function AddPost() {
           </div>
 
           <div className="form-group">
-            <label>Upload Image (optional)</label>
+            <label>Upload Image <span style={{color:"red"}}>*</span></label>
             <input
               type="file"
               accept="image/*"
+              required  
               onChange={(e) => setImage(e.target.files[0])}
             />
           </div>

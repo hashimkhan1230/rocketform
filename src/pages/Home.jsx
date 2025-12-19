@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import { Link } from "react-router-dom";
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -11,7 +11,6 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // 🔹 Latest Posts
       const postQuery = query(
         collection(db, "posts"),
         orderBy("createdAt", "desc"),
@@ -20,7 +19,6 @@ export default function Home() {
       const postSnap = await getDocs(postQuery);
       setPosts(postSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
-      // 🔹 Latest Articles
       const articleQuery = query(
         collection(db, "articles"),
         orderBy("createdAt", "desc"),
@@ -33,7 +31,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // 🔍 SEARCH FILTER (TITLE BASED)
+  // 🔍 SEARCH FILTER
   const filteredPosts = posts.filter(post =>
     post.title?.toLowerCase().includes(search.toLowerCase())
   );
@@ -47,7 +45,7 @@ export default function Home() {
   return (
     <div className="home-wrapper">
 
-      {/* ===== HERO ===== */}
+      {/* HERO */}
       <section className="hero-landing">
         <h1>
           WELCOME TO <span>RocketForm</span>
@@ -64,10 +62,9 @@ export default function Home() {
         />
       </section>
 
-      {/* ===== SEARCH RESULTS ===== */}
+      {/* 🔎 SEARCH RESULTS */}
       {isSearching && (
         <>
-          {/* POSTS RESULT */}
           <section className="latest">
             <h2>Search Results – Posts</h2>
 
@@ -82,18 +79,13 @@ export default function Home() {
                     key={post.id}
                   >
                     <div className="home-card">
-                      {/* IMAGE / NO IMAGE */}
-                      <div className="card-image-wrapper">
-                        {post.imageUrl ? (
-                          <img
-                            src={post.imageUrl}
-                            alt={post.title}
-                            className="card-image"
-                          />
-                        ) : (
-                          <div className="no-image">No Image</div>
-                        )}
-                      </div>
+                      {post.imageUrl && (
+                        <img
+                          src={post.imageUrl}
+                          alt={post.title}
+                          className="card-image"
+                        />
+                      )}
 
                       <div className="home-card-content">
                         <h3>{post.title}</h3>
@@ -107,7 +99,6 @@ export default function Home() {
             )}
           </section>
 
-          {/* ARTICLES RESULT */}
           <section className="latest">
             <h2>Search Results – Articles</h2>
 
@@ -122,18 +113,13 @@ export default function Home() {
                     key={article.id}
                   >
                     <div className="home-card">
-                      {/* IMAGE / NO IMAGE */}
-                      <div className="card-image-wrapper">
-                        {article.imageUrl ? (
-                          <img
-                            src={article.imageUrl}
-                            alt={article.title}
-                            className="card-image"
-                          />
-                        ) : (
-                          <div className="no-image">No Image</div>
-                        )}
-                      </div>
+                      {article.imageUrl && (
+                        <img
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="card-image"
+                        />
+                      )}
 
                       <div className="home-card-content">
                         <h3>{article.title}</h3>
@@ -149,7 +135,7 @@ export default function Home() {
         </>
       )}
 
-      {/* ===== NORMAL HOME (WHEN NOT SEARCHING) ===== */}
+      {/* 🆕 NORMAL HOME (ONLY WHEN NOT SEARCHING) */}
       {!isSearching && (
         <>
           {/* POSTS */}
@@ -167,17 +153,13 @@ export default function Home() {
                     key={post.id}
                   >
                     <div className="home-card">
-                      <div className="card-image-wrapper">
-                        {post.imageUrl ? (
-                          <img
-                            src={post.imageUrl}
-                            alt={post.title}
-                            className="card-image"
-                          />
-                        ) : (
-                          <div className="no-image">No Image</div>
-                        )}
-                      </div>
+                      {post.imageUrl && (
+                        <img
+                          src={post.imageUrl}
+                          alt={post.title}
+                          className="card-image"
+                        />
+                      )}
 
                       <div className="home-card-content">
                         <h3>{post.title}</h3>
@@ -206,17 +188,13 @@ export default function Home() {
                     key={article.id}
                   >
                     <div className="home-card">
-                      <div className="card-image-wrapper">
-                        {article.imageUrl ? (
-                          <img
-                            src={article.imageUrl}
-                            alt={article.title}
-                            className="card-image"
-                          />
-                        ) : (
-                          <div className="no-image">No Image</div>
-                        )}
-                      </div>
+                      {article.imageUrl && (
+                        <img
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="card-image"
+                        />
+                      )}
 
                       <div className="home-card-content">
                         <h3>{article.title}</h3>
